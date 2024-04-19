@@ -12,7 +12,7 @@ public class InputView {
     }
 
     public static int inputMenu() {
-        System.out.println("게임을 새로 시작하려면 1, 기록을 보려면 2, 종료하려면 9를 입력하세요.");
+        System.out.println("게임을 새로 시작하려면 1, 기록을 보려면 2, 통계를 보려면 3, 종료하려면 9을 입력하세요.");
         return scanner.nextInt();
     }
 

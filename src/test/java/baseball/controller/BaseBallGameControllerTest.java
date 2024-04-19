@@ -4,6 +4,7 @@ import baseball.domain.Game;
 import baseball.domain.Number;
 import baseball.dto.CheckBallResponse;
 import baseball.dto.CheckBallsRequest;
+import baseball.dto.StatisticsResponse;
 import baseball.repository.GameRepository;
 import baseball.repository.GameRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
@@ -99,5 +100,30 @@ class BaseBallGameControllerTest {
         baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId));
 
         assertThat(baseBallGameController.getGame(gameId).playerRecordResponses()).isNotEmpty();
+    }
+
+    @DisplayName("통계를 조회한다.")
+    @Test
+    void getStatisticsTest() {
+        int gameId1 = baseBallGameController.gameStart(() -> List.of(
+                new Number(1), new Number(2), new Number(3)));
+
+        baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId1));
+
+        int gameId2 = baseBallGameController.gameStart(() -> List.of(
+                new Number(1), new Number(2), new Number(3)));
+
+        baseBallGameController.checkBalls(new CheckBallsRequest(List.of(2, 3, 4), gameId2));
+        baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId2));
+
+        StatisticsResponse statistics = baseBallGameController.getStatistics();
+
+        assertAll(
+                () -> assertThat(statistics.minPlayerTimes()).isEqualTo(1),
+                () -> assertThat(statistics.gameIdsOfMinPlayerTimes()).isEqualTo(List.of(gameId1)),
+                () -> assertThat(statistics.maxPlayerTimes()).isEqualTo(2),
+                () -> assertThat(statistics.gameIdsOfMaxPlayerTimes()).isEqualTo(List.of(gameId2)),
+                () -> assertThat(statistics.averagePlayerTimes()).isEqualTo(1.5)
+        );
     }
 }

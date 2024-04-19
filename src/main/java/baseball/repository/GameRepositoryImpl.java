@@ -33,6 +33,41 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
+    public List<Game> findAllByPlayerTimes(int playerTimes) {
+        return GAME_RECORDS.values()
+                .stream()
+                .filter(game -> game.samePlayerTimes(playerTimes))
+                .toList();
+    }
+
+    @Override
+    public int getMinPlayerTimes() {
+        return GAME_RECORDS.values()
+                .stream()
+                .mapToInt(Game::getPlayerTimes)
+                .min()
+                .orElse(0);
+    }
+
+    @Override
+    public int getMaxPlayerTimes() {
+        return GAME_RECORDS.values()
+                .stream()
+                .mapToInt(Game::getPlayerTimes)
+                .max()
+                .orElse(0);
+    }
+
+    @Override
+    public double getAveragePlayerTimes() {
+        return GAME_RECORDS.values()
+                .stream()
+                .mapToInt(Game::getPlayerTimes)
+                .average()
+                .orElse(0);
+    }
+
+    @Override
     public void clear() {
         GAME_RECORDS.clear();
     }

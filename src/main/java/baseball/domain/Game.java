@@ -28,6 +28,10 @@ public class Game {
         endAt = LocalDateTime.now();
     }
 
+    public boolean samePlayerTimes(int playerTimes) {
+        return this.getPlayerTimes() == playerTimes;
+    }
+
     public int getId() {
         return id;
     }

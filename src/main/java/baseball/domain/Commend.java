@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public enum Commend {
     START(1),
     GAME_RECORD(2),
+    STATISTICS(3),
     END(9);
 
     private static final Map<Integer, Commend> COMMEND_VALUES = Arrays.stream(values())

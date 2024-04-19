@@ -3,6 +3,7 @@ package baseball.view;
 import baseball.dto.CheckBallResponse;
 import baseball.dto.GameRecordResponse;
 import baseball.dto.GameRecordsResponse;
+import baseball.dto.StatisticsResponse;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -78,5 +79,12 @@ public class OutputView {
         });
 
         System.out.println("-------기록 종료-------");
+    }
+
+    public static void printStatistics(StatisticsResponse statistics) {
+        System.out.println("게임 통계");
+        System.out.println("가장 적은 횟수: " + statistics.minPlayerTimes() + "회 - " + statistics.gameIdsOfMinPlayerTimes());
+        System.out.println("가장 많은 횟수: " + statistics.maxPlayerTimes() + "회 - " + statistics.gameIdsOfMaxPlayerTimes());
+        System.out.println("평균횟수: " + statistics.averagePlayerTimes());
     }
 }

@@ -16,6 +16,7 @@ class CommendTest {
         return Stream.of(
                 Arguments.of(1, Commend.START),
                 Arguments.of(2, Commend.GAME_RECORD),
+                Arguments.of(3, Commend.STATISTICS),
                 Arguments.of(9, Commend.END)
         );
     }
@@ -32,7 +33,7 @@ class CommendTest {
     @DisplayName("존재하지 않는 명령어를 입력하면 예외가 발생한다.")
     @Test
     void ofExceptionTest() {
-        assertThatThrownBy(() -> Commend.of(3))
+        assertThatThrownBy(() -> Commend.of(10))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("1 또는 9만 입력 가능합니다.");
     }

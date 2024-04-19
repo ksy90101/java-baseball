@@ -71,6 +71,27 @@ public class BaseBallGameController {
         return convertGameRecordResponse(game);
     }
 
+    public StatisticsResponse getStatistics() {
+        int minPlayerTimes = gameRepository.getMinPlayerTimes();
+        int maxPlayerTimes = gameRepository.getMaxPlayerTimes();
+        List<Integer> gameIdsOfMinPlayerTimes = gameRepository.findAllByPlayerTimes(minPlayerTimes)
+                .stream()
+                .map(Game::getId)
+                .toList();
+        List<Integer> gameIdsOfMaxPlayerTimes = gameRepository.findAllByPlayerTimes(maxPlayerTimes)
+                .stream()
+                .map(Game::getId)
+                .toList();
+        double averagePlayerTimes = gameRepository.getAveragePlayerTimes();
+        
+        return new StatisticsResponse(
+                minPlayerTimes,
+                gameIdsOfMinPlayerTimes,
+                maxPlayerTimes,
+                gameIdsOfMaxPlayerTimes,
+                averagePlayerTimes);
+    }
+
     private GameRecordsResponse convertGameRecordsResponse(Game game) {
         return new GameRecordsResponse(game.getId(),
                 game.getStartAt(),

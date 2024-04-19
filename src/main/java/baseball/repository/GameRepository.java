@@ -12,6 +12,14 @@ public interface GameRepository {
 
     List<Game> findAll();
 
+    List<Game> findAllByPlayerTimes(int playerTimes);
+
+    int getMinPlayerTimes();
+
+    int getMaxPlayerTimes();
+
+    double getAveragePlayerTimes();
+
     void clear();
 
 }

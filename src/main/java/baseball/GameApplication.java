@@ -2,10 +2,7 @@ package baseball;
 
 import baseball.controller.BaseBallGameController;
 import baseball.domain.Commend;
-import baseball.dto.CheckBallResponse;
-import baseball.dto.CheckBallsRequest;
-import baseball.dto.GameRecordResponse;
-import baseball.dto.GameRecordsResponse;
+import baseball.dto.*;
 import baseball.generator.BaseBallNumberGenerator;
 import baseball.generator.BaseBallNumberShuffleGenerator;
 import baseball.repository.GameRepositoryImpl;
@@ -26,6 +23,9 @@ public class GameApplication {
                 if (commend == Commend.GAME_RECORD) {
                     List<GameRecordsResponse> gameRecords = baseBallGameController.getGames();
                     OutputView.printGameRecords(gameRecords);
+                    if (gameRecords.isEmpty()) {
+                        continue;
+                    }
                     int gameId = InputView.inputGameRecordId();
 
                     GameRecordResponse game = baseBallGameController.getGame(gameId);
@@ -35,6 +35,10 @@ public class GameApplication {
                     int gameId = baseBallGameController.gameStart(baseBallNumberGenerator);
                     OutputView.printPickComputerNumbers();
                     gameInProgress(gameId);
+                } else if (commend == Commend.STATISTICS) {
+                    StatisticsResponse statistics = baseBallGameController.getStatistics();
+
+                    OutputView.printStatistics(statistics);
                 }
             }
             while (commend != Commend.END);
