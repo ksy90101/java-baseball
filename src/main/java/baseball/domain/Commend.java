@@ -7,15 +7,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum Commend {
-    START("1"),
-    END("9");
+    START(1),
+    GAME_RECORD(2),
+    END(9);
 
     private static final Map<Integer, Commend> COMMEND_VALUES = Arrays.stream(values())
-            .collect(Collectors.toMap(commend -> Integer.parseInt(commend.value), Function.identity()));
+            .collect(Collectors.toMap(commend -> commend.value, Function.identity()));
 
-    private final String value;
+    private final int value;
 
-    Commend(String value) {
+    Commend(int value) {
         this.value = value;
     }
 

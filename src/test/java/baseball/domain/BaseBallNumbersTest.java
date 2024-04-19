@@ -50,16 +50,13 @@ class BaseBallNumbersTest {
     @ParameterizedTest
     @CsvSource(value = {"1, 0", "2, 1", "3, 2"}, delimiter = ',')
     void indexOfTest(int number, int index) {
-
         assertThat(INCORRECT_BASE_BALL_NUMBERS.indexOf(new Number(number))).isEqualTo(index);
     }
 
     @DisplayName("중복된 값이 있으면 예외가 발생한다.")
     @Test
     void validateDuplicateNumbersExceptionTest() {
-        List<Number> numbers = List.of(new Number(1),
-                new Number(2),
-                new Number(2));
+        List<Number> numbers = List.of(new Number(1), new Number(2), new Number(2));
         assertThatThrownBy(() -> new BaseBallNumbers(numbers)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 숫자가 있습니다.");
     }
@@ -67,17 +64,14 @@ class BaseBallNumbersTest {
     @DisplayName("중복값이 없으면 예외가 발생하지 않는다.")
     @Test
     void validateDuplicateNumbersNoExceptionTest() {
-        List<Number> numbers = List.of(new Number(1),
-                new Number(2),
-                new Number(3));
+        List<Number> numbers = List.of(new Number(1), new Number(2), new Number(3));
         assertDoesNotThrow(() -> new BaseBallNumbers(numbers));
     }
 
     @DisplayName("number가 2개 이하가 들어가는 경우 에러가 발생한다.")
     @Test
     void validateSizeLessThanTwoExceptionTest() {
-        List<Number> numbers = List.of(new Number(1),
-                new Number(2));
+        List<Number> numbers = List.of(new Number(1), new Number(2));
         assertThatThrownBy(() -> new BaseBallNumbers(numbers)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("3개의 숫자를 입력해주세요.");
     }

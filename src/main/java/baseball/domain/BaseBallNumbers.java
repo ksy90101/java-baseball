@@ -4,15 +4,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class BaseBallNumbers {
+public record BaseBallNumbers(List<Number> numbers) {
     public static final int TOTAL_COUNT = 3;
 
-    private final List<Number> numbers;
-
-    public BaseBallNumbers(List<Number> numbers) {
-        this.numbers = numbers;
-        validateDuplicateNumbers();
-        validateSize();
+    public BaseBallNumbers {
+        validateDuplicateNumbers(numbers);
+        validateSize(numbers);
     }
 
     public boolean isContains(Number number) {
@@ -27,28 +24,35 @@ public class BaseBallNumbers {
         return numbers.indexOf(number);
     }
 
-    public List<Number> getNumbers() {
+    @Override
+    public List<Number> numbers() {
         return Collections.unmodifiableList(numbers);
     }
 
-    private boolean isTotalSize() {
-        return this.numbers.size() == TOTAL_COUNT;
+    public List<Integer> getValueNumbers() {
+        return numbers.stream()
+                .map(Number::value)
+                .toList();
     }
 
-    private boolean isDuplication() {
+    private boolean isTotalSize(List<Number> numbers) {
+        return numbers.size() == TOTAL_COUNT;
+    }
+
+    private boolean isDuplication(List<Number> numbers) {
         return numbers.stream()
                 .distinct()
                 .count() != numbers.size();
     }
 
-    private void validateDuplicateNumbers() {
-        if (isDuplication()) {
+    private void validateDuplicateNumbers(List<Number> numbers) {
+        if (isDuplication(numbers)) {
             throw new IllegalArgumentException("중복된 숫자가 있습니다.");
         }
     }
 
-    private void validateSize() {
-        if (!isTotalSize()) {
+    private void validateSize(List<Number> numbers) {
+        if (!isTotalSize(numbers)) {
             throw new IllegalArgumentException("3개의 숫자를 입력해주세요.");
         }
     }
@@ -61,8 +65,4 @@ public class BaseBallNumbers {
         return Objects.equals(numbers, that.numbers);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(numbers);
-    }
 }

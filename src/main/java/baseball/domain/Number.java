@@ -1,16 +1,11 @@
 package baseball.domain;
 
-import java.util.Objects;
-
-public class Number {
+public record Number(int value) {
     public static final int MIN_VALUE = 1;
     public static final int MAX_VALUE = 9;
 
-    private final int value;
-
-    public Number(int value) {
+    public Number {
         validateRange(value);
-        this.value = value;
     }
 
     public void validateRange(int value) {
@@ -31,8 +26,4 @@ public class Number {
         return this.value == value;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
 }

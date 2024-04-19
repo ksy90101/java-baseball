@@ -9,15 +9,25 @@ public class Computer {
         this.numbers = new BaseBallNumbers(numbers);
     }
 
-    public boolean isBall(Number number) {
+    public int getStrikeCount(BaseBallNumbers playerNumbers) {
+        return (int) playerNumbers.numbers().stream()
+                .filter(number -> isStrike(number, playerNumbers.indexOf(number)))
+                .count();
+    }
+
+    public int getBallCount(BaseBallNumbers playerNumbers, int strikeCount) {
+        int totalBallCount = (int) playerNumbers.numbers().stream()
+                .filter(this::isBall)
+                .count();
+
+        return totalBallCount - strikeCount;
+    }
+
+    private boolean isBall(Number number) {
         return numbers.isContains(number);
     }
 
-    public boolean isStrike(Number number, int index) {
+    private boolean isStrike(Number number, int index) {
         return numbers.isSameIndexOf(number, index);
-    }
-
-    public boolean isSameNumbers(BaseBallNumbers numbers) {
-        return this.numbers.equals(numbers);
     }
 }

@@ -1,6 +1,9 @@
 package baseball.dto;
 
-public record CheckBallResponse(
+import java.util.List;
+
+public record PlayerRecordResponse(
+        List<Integer> numbers,
         int strikeCount,
         int ballCount,
         boolean isNotting,
