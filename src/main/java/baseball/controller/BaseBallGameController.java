@@ -87,6 +87,6 @@ public class BaseBallGameController {
                         playerRecord.isNotting(),
                         playerRecord.isSuccess()))
                 .toList();
-        return new GameRecordResponse(playerRecordResponses);
+        return new GameRecordResponse(game.getId(), playerRecordResponses);
     }
 }

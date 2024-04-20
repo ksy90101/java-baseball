@@ -25,11 +25,8 @@ public class OutputView {
             return;
         }
 
-        System.out.println(checkBallResponse.ballCount() + "볼 " + checkBallResponse.strikeCount() + "스트라이크");
-        if (checkBallResponse.isSuccess()) {
-            System.out.println("3개의 숫자를 모두 맞히셨습니다.");
-            System.out.println("-------게임 종료-------");
-        }
+        printStrikeAndBallCount(checkBallResponse.strikeCount(), checkBallResponse.ballCount());
+        printGameSuccessMessage(checkBallResponse.isSuccess());
     }
 
     public static void printPickComputerNumbers() {
@@ -61,7 +58,7 @@ public class OutputView {
     }
 
     public static void printGameRecord(GameRecordResponse gameRecord) {
-        System.out.println("1번 게임 결과");
+        System.out.println(gameRecord.id() + "번 게임 결과");
 
         gameRecord.playerRecordResponses().forEach(playerRecord -> {
             String playerNumber = playerRecord.numbers().stream().map(String::valueOf).collect(Collectors.joining(""));
@@ -71,12 +68,21 @@ public class OutputView {
                 return;
             }
 
-            System.out.println(playerRecord.ballCount() + "볼 " + playerRecord.strikeCount() + "스트라이크");
-            if (playerRecord.isSuccess()) {
-                System.out.println("3개의 숫자를 모두 맞히셨습니다.");
-            }
+            printStrikeAndBallCount(playerRecord.strikeCount(), playerRecord.ballCount());
+            printGameSuccessMessage(playerRecord.isSuccess());
         });
 
         System.out.println("-------기록 종료-------");
+    }
+
+    private static void printStrikeAndBallCount(int strikeCount, int ballCount) {
+        System.out.println(strikeCount + "스트라이크 " + ballCount + "볼");
+    }
+
+    private static void printGameSuccessMessage(boolean isSuccess) {
+        if (isSuccess) {
+            System.out.println("3개의 숫자를 모두 맞히셨습니다.");
+            System.out.println("-------게임 종료-------");
+        }
     }
 }
