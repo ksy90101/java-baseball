@@ -12,7 +12,8 @@ class GameTest {
     @Test
     void endTest() {
         Game game = new Game(new Computer(List.of(new Number(1), new Number(2), new Number(3))));
-
+        PlayerRecord playerRecord = new PlayerRecord(new BaseBallNumbers(List.of(new Number(1), new Number(2), new Number(3))), 3, 0);
+        game.addPlayerRecord(playerRecord);
         assertThat(game.getEndAt()).isNull();
 
         game.end();

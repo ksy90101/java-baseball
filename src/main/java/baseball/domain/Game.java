@@ -25,6 +25,15 @@ public class Game {
     }
 
     public void end() {
+        if (playerNumbers.isEmpty()) {
+            throw new IllegalArgumentException("사용자가 한번도 실행하지 않았습니다.");
+        }
+        if (playerNumbers.stream()
+                .filter(PlayerRecord::isSuccess)
+                .noneMatch(PlayerRecord::isSuccess)) {
+            throw new IllegalArgumentException("사용자가 성공하지 못했습니다.");
+        }
+
         endAt = LocalDateTime.now();
     }
 
