@@ -20,7 +20,13 @@ public class GameApplication {
         try {
             do {
                 commend = Commend.of(InputView.inputMenu());
-                if (commend == Commend.GAME_RECORD) {
+                if (commend == Commend.START) {
+                    int limitPlayerTimes = InputView.inputLimitPlayerTimes();
+                    GameStartRequest gameStartRequest = new GameStartRequest(limitPlayerTimes);
+                    int gameId = baseBallGameController.gameStart(baseBallNumberGenerator, gameStartRequest);
+                    OutputView.printPickComputerNumbers();
+                    gameInProgress(gameId);
+                } else if (commend == Commend.GAME_RECORD) {
                     List<GameRecordsResponse> gameRecords = baseBallGameController.getGames();
                     OutputView.printGameRecords(gameRecords);
                     if (gameRecords.isEmpty()) {
@@ -31,10 +37,6 @@ public class GameApplication {
                     GameRecordResponse game = baseBallGameController.getGame(gameId);
 
                     OutputView.printGameRecord(game);
-                } else if (commend == Commend.START) {
-                    int gameId = baseBallGameController.gameStart(baseBallNumberGenerator);
-                    OutputView.printPickComputerNumbers();
-                    gameInProgress(gameId);
                 } else if (commend == Commend.STATISTICS) {
                     StatisticsResponse statistics = baseBallGameController.getStatistics();
 
@@ -62,7 +64,7 @@ public class GameApplication {
                 CheckBallsRequest checkBallsRequest = new CheckBallsRequest(userNumbers, gameId);
                 CheckBallResponse checkBallDto = baseBallGameController.checkBalls(checkBallsRequest);
                 OutputView.printResult(checkBallDto);
-                isFinished = !checkBallDto.isSuccess();
+                isFinished = !checkBallDto.isFinished();
             }
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());

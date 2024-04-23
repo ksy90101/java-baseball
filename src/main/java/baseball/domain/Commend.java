@@ -14,6 +14,11 @@ public enum Commend {
 
     private static final Map<Integer, Commend> COMMEND_VALUES = Arrays.stream(values())
             .collect(Collectors.toMap(commend -> commend.value, Function.identity()));
+    private static final String DELIMITER = ", ";
+    private static final String VALUES_BY_DELIMITER = COMMEND_VALUES.values()
+            .stream()
+            .map(commend -> String.valueOf(commend.value))
+            .collect(Collectors.joining(DELIMITER));
 
     private final int value;
 
@@ -23,6 +28,6 @@ public enum Commend {
 
     public static Commend of(int value) {
         return Optional.ofNullable(COMMEND_VALUES.get(value))
-                .orElseThrow(() -> new IllegalArgumentException("1 또는 9만 입력 가능합니다."));
+                .orElseThrow(() -> new IllegalArgumentException(VALUES_BY_DELIMITER + "만 입력 가능합니다."));
     }
 }

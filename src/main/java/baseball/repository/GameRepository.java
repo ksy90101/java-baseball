@@ -14,11 +14,27 @@ public interface GameRepository {
 
     List<Game> findAllByPlayerTimes(int playerTimes);
 
+    List<Integer> findIdsByLimitPlayerTimes(int limitPlayerTimes);
+
     int getMinPlayerTimes();
 
     int getMaxPlayerTimes();
 
     double getAveragePlayerTimes();
+
+    int getMaxCountLimitPlayerTimes();
+
+    int getMinCountLimitPlayerTimes();
+
+    int getMaxLimitPlayerTimes();
+
+    int getMinLimitPlayerTimes();
+
+    double getAverageLimitPlayerTimes();
+
+    int getMaxLimitPlayerTimesByWinnerComputer();
+
+    int getMaxLimitPlayerTimesByWinnerPlayer();
 
     void clear();
 

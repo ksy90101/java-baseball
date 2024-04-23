@@ -4,6 +4,7 @@ import baseball.domain.Game;
 import baseball.domain.Number;
 import baseball.dto.CheckBallResponse;
 import baseball.dto.CheckBallsRequest;
+import baseball.dto.GameStartRequest;
 import baseball.dto.StatisticsResponse;
 import baseball.repository.GameRepository;
 import baseball.repository.GameRepositoryImpl;
@@ -29,8 +30,9 @@ class BaseBallGameControllerTest {
     @DisplayName("컴퓨터를 생성한다.")
     @Test
     void computerStartTest() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int computerId = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         assertThat(gameRepository.findById(computerId)).isPresent();
     }
@@ -38,8 +40,9 @@ class BaseBallGameControllerTest {
     @DisplayName("1스트라이크 1볼을 확인한다.")
     @Test
     void checkBallTest() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int gameId = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         CheckBallResponse checkBallDto = baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 3, 5), gameId));
 
@@ -52,8 +55,9 @@ class BaseBallGameControllerTest {
     @DisplayName("낫싱을 확인한다.")
     @Test
     void checkBallTest2() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int gameId = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         CheckBallResponse checkBallDto = baseBallGameController.checkBalls(new CheckBallsRequest(List.of(4, 5, 6), gameId));
 
@@ -67,8 +71,9 @@ class BaseBallGameControllerTest {
     @DisplayName("3스트라이크를 확인한다.")
     @Test
     void checkBallTest3() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int gameId = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         CheckBallResponse checkBallDto = baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId));
         Game game = gameRepository.findById(gameId).get();
@@ -84,8 +89,9 @@ class BaseBallGameControllerTest {
     @DisplayName("게임을 조회한다.")
     @Test
     void getGamesTest() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int gameId = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         assertThat(baseBallGameController.getGames()).hasSize(1);
         assertThat(baseBallGameController.getGames().get(0).id()).isEqualTo(gameId);
@@ -94,8 +100,9 @@ class BaseBallGameControllerTest {
     @DisplayName("게임을 조회한다.")
     @Test
     void getGameTest() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int gameId = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId));
 
@@ -105,13 +112,14 @@ class BaseBallGameControllerTest {
     @DisplayName("통계를 조회한다.")
     @Test
     void getStatisticsTest() {
+        GameStartRequest gameStartRequest = new GameStartRequest(10);
         int gameId1 = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId1));
 
         int gameId2 = baseBallGameController.gameStart(() -> List.of(
-                new Number(1), new Number(2), new Number(3)));
+                new Number(1), new Number(2), new Number(3)), gameStartRequest);
 
         baseBallGameController.checkBalls(new CheckBallsRequest(List.of(2, 3, 4), gameId2));
         baseBallGameController.checkBalls(new CheckBallsRequest(List.of(1, 2, 3), gameId2));

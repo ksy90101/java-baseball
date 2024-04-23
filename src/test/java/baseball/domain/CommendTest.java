@@ -35,6 +35,6 @@ class CommendTest {
     void ofExceptionTest() {
         assertThatThrownBy(() -> Commend.of(10))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("1 또는 9만 입력 가능합니다.");
+                .hasMessage("1, 2, 3, 9만 입력 가능합니다.");
     }
 }

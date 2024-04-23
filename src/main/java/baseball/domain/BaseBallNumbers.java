@@ -2,7 +2,6 @@ package baseball.domain;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public record BaseBallNumbers(List<Number> numbers) {
     public static final int TOTAL_COUNT = 3;
@@ -29,7 +28,7 @@ public record BaseBallNumbers(List<Number> numbers) {
         return Collections.unmodifiableList(numbers);
     }
 
-    public List<Integer> getValueNumbers() {
+    List<Integer> getValueNumbers() {
         return numbers.stream()
                 .map(Number::value)
                 .toList();
@@ -56,13 +55,4 @@ public record BaseBallNumbers(List<Number> numbers) {
             throw new IllegalArgumentException("3개의 숫자를 입력해주세요.");
         }
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BaseBallNumbers that = (BaseBallNumbers) o;
-        return Objects.equals(numbers, that.numbers);
-    }
-
 }

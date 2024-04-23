@@ -25,5 +25,5 @@ public record Number(int value) {
     public boolean equals(int value) {
         return this.value == value;
     }
-
+    
 }

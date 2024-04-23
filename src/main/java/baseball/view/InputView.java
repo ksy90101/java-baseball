@@ -16,6 +16,11 @@ public class InputView {
         return scanner.nextInt();
     }
 
+    public static int inputLimitPlayerTimes() {
+        System.out.println("시도의 제한을 입력해주세요.");
+        return scanner.nextInt();
+    }
+
     public static List<Integer> inputNumbers() {
         System.out.print("숫자를 입력해주세요 : ");
         String inputNumbers = scanner.next();
