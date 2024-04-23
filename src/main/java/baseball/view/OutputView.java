@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    private static final String DIVIDER = "------------";
 
     private OutputView() {
     }
@@ -90,5 +91,21 @@ public class OutputView {
         System.out.println("가장 적은 횟수: " + statistics.minPlayerTimes() + "회 - " + statistics.gameIdsOfMinPlayerTimes());
         System.out.println("가장 많은 횟수: " + statistics.maxPlayerTimes() + "회 - " + statistics.gameIdsOfMaxPlayerTimes());
         System.out.println("평균횟수: " + statistics.averagePlayerTimes());
+
+        System.out.println(DIVIDER);
+
+        System.out.println("가장 많이 적용된 승리/패패 횟수: " + statistics.maxCountLimitPlayerTimes() + "회 - " + statistics.gameIdsOfMaxCountLimitPlayerTimes());
+        System.out.println("가장 적게 적용된 승리/패패 횟수: " + statistics.minCountLimitPlayerTimes() + "회 - " + statistics.gameIdsOfMinCountLimitPlayerTimes());
+        System.out.println("평균 승리/패패 횟수: " + statistics.averageLimitPlayerTimes());
+
+        System.out.println(DIVIDER);
+
+        System.out.println("가장 큰 값으로 적용된 승리/패패 횟수: " + statistics.maxLimitPlayerTimes() + "회 - " + statistics.gameIdsOfMaxLimitPlayerTimes());
+        System.out.println("가장 낮은 값으로 적용된 승리/패패 횟수: " + statistics.minLimitPlayerTimes() + "회 - " + statistics.gameIdsOfMinLimitPlayerTimes());
+
+        System.out.println(DIVIDER);
+
+        System.out.println("컴퓨터가 가장 많이 승리한 승리/패패 횟수: " + statistics.maxLimitPlayerTimesByWinnerComputer() + "회 - " + statistics.gameIdsOfMaxLimitPlayerTimesByWinnerComputer());
+        System.out.println("플레이어가 가장 많이 승리한 승리/패패 횟수: " + statistics.maxLimitPlayerTimesByWinnerPlayer() + "회 - " + statistics.gameIdsOfMaxLimitPlayerTimesByWinnerPlayer());
     }
 }

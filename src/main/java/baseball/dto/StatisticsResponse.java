@@ -21,7 +21,7 @@ public record StatisticsResponse(
         int maxLimitPlayerTimesByWinnerComputer,
         List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer,
         int maxLimitPlayerTimesByWinnerPlayer,
-        List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerComputer,
+        List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerPlayer,
         double averageLimitPlayerTimes
 ) {
 }

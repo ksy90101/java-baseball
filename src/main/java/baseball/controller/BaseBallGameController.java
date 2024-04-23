@@ -73,47 +73,37 @@ public class BaseBallGameController {
     }
 
     public StatisticsResponse getStatistics() {
-        // 플레이어가 가장 많이 시도한 횟수
         int maxPlayerTimes = gameRepository.getMaxPlayerTimes();
         List<Integer> gameIdsOfMaxPlayerTimes = gameRepository.findAllByPlayerTimes(maxPlayerTimes)
                 .stream()
                 .map(Game::getId)
                 .toList();
-        // 플레이어가 가장 적게 시도한 횟수
         int minPlayerTimes = gameRepository.getMinPlayerTimes();
         List<Integer> gameIdsOfMinPlayerTimes = gameRepository.findAllByPlayerTimes(minPlayerTimes)
                 .stream()
                 .map(Game::getId)
                 .toList();
 
-        // 사용자가 평균적으로 시도한 횟수
         double averagePlayerTimes = gameRepository.getAveragePlayerTimes();
 
-        // 가장 많이 적용된 승리/패패 횟수
         int maxCountLimitPlayerTimes = gameRepository.getMaxCountLimitPlayerTimes();
         List<Integer> gameIdsOfMaxCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(maxCountLimitPlayerTimes);
 
-        // 가장 적게 적용된 승리/패패 횟수
         int minCountLimitPlayerTimes = gameRepository.getMinCountLimitPlayerTimes();
         List<Integer> gameIdsOfMinCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        // 가장 큰 값으로 적용된 승리/패패 횟수
         int maxLimitPlayerTimes = gameRepository.getMaxLimitPlayerTimes();
         List<Integer> gameIdsOfMaxLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        // 가장 적은 값으로 적용된 승리/패패 횟수
         int minLimitPlayerTimes = gameRepository.getMinLimitPlayerTimes();
         List<Integer> gameIdsOfMinLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        //  - 컴퓨터가 가장 많이 승리한 승리/패패 횟수
         int maxLimitPlayerTimesByWinnerComputer = gameRepository.getMaxLimitPlayerTimesByWinnerComputer();
         List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        //  - 사용자가 가장 많이 승리한 승리/패패 횟수
         int maxLimitPlayerTimesByWinnerPlayer = gameRepository.getMaxLimitPlayerTimesByWinnerPlayer();
-        List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerComputer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerPlayer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        // - 평균 승리/패패 횟수
         double averageLimitPlayerTimes = gameRepository.getAverageLimitPlayerTimes();
 
         return new StatisticsResponse(
@@ -133,7 +123,7 @@ public class BaseBallGameController {
                 maxLimitPlayerTimesByWinnerComputer,
                 gameIdsOfMaxLimitPlayerTimesByWinnerComputer,
                 maxLimitPlayerTimesByWinnerPlayer,
-                gameIdsOfMibLimitPlayerTimesByWinnerComputer,
+                gameIdsOfMibLimitPlayerTimesByWinnerPlayer,
                 averageLimitPlayerTimes
         );
     }
