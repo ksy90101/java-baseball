@@ -14,41 +14,37 @@ import java.util.List;
 public class BaseBallGameController {
     private final GameRepository gameRepository;
 
-    public BaseBallGameController(GameRepository gameRepository) {
+    public BaseBallGameController(final GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
 
-    public int gameStart(BaseBallNumberGenerator baseBallNumberGenerator) {
-        Computer computer = new Computer(baseBallNumberGenerator.generate());
-        Game game = new Game(computer);
+    public int gameStart(final BaseBallNumberGenerator baseBallNumberGenerator) {
+        final Computer computer = new Computer(baseBallNumberGenerator.generate());
+        final Game game = new Game(computer);
 
         return gameRepository.insert(game);
     }
 
-    public CheckBallResponse checkBalls(CheckBallsRequest checkBallsRequest) {
-        Game game = gameRepository.findById(checkBallsRequest.gameId())
+    public CheckBallResponse checkBalls(final CheckBallsRequest checkBallsRequest) {
+        final Game game = gameRepository.findById(checkBallsRequest.gameId())
                 .orElseThrow(() -> new IllegalArgumentException("게임이 존재하지 않습니다."));
 
-        BaseBallNumbers playerNumbers = getPlayerNumbers(checkBallsRequest);
-        Computer computer = game.getComputer();
-        int strikeCount = computer.getStrikeCount(playerNumbers);
-        int ballCount = computer.getBallCount(playerNumbers, strikeCount);
+        final BaseBallNumbers playerNumbers = getPlayerNumbers(checkBallsRequest);
+        final Computer computer = game.getComputer();
+        final int strikeCount = computer.getStrikeCount(playerNumbers);
+        final int ballCount = computer.getBallCount(playerNumbers, strikeCount);
 
-        PlayerRecord playerRecord = new PlayerRecord(
+        final PlayerRecord playerRecord = new PlayerRecord(
                 playerNumbers,
                 strikeCount,
                 ballCount
         );
         game.addPlayerRecord(playerRecord);
 
-        if (playerRecord.isSuccess()) {
-            game.end();
-        }
-
         return new CheckBallResponse(strikeCount, ballCount, playerRecord.isNotting(), playerRecord.isSuccess());
     }
 
-    private BaseBallNumbers getPlayerNumbers(CheckBallsRequest checkBallsRequest) {
+    private BaseBallNumbers getPlayerNumbers(final CheckBallsRequest checkBallsRequest) {
         return new BaseBallNumbers(
                 checkBallsRequest.userNumbers()
                         .stream()
@@ -58,28 +54,28 @@ public class BaseBallGameController {
     }
 
     public List<GameRecordsResponse> getGames() {
-        List<Game> games = gameRepository.findAll();
+        final List<Game> games = gameRepository.findAll();
         return games.stream()
                 .map(this::convertGameRecordsResponse)
                 .toList();
     }
 
-    public GameRecordResponse getGame(int id) {
-        Game game = gameRepository.findById(id)
+    public GameRecordResponse getGame(final int id) {
+        final Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게임 기록이 존재하지 않습니다."));
 
         return convertGameRecordResponse(game);
     }
 
-    private GameRecordsResponse convertGameRecordsResponse(Game game) {
+    private GameRecordsResponse convertGameRecordsResponse(final Game game) {
         return new GameRecordsResponse(game.getId(),
                 game.getStartAt(),
                 game.getEndAt(),
                 game.getPlayerTimes());
     }
 
-    private GameRecordResponse convertGameRecordResponse(Game game) {
-        List<PlayerRecordResponse> playerRecordResponses = game.getPlayerNumbers()
+    private GameRecordResponse convertGameRecordResponse(final Game game) {
+        final List<PlayerRecordResponse> playerRecordResponses = game.getPlayerNumbers()
                 .stream()
                 .map(playerRecord -> new PlayerRecordResponse(playerRecord.getValueNumbers(),
                         playerRecord.getStrikeCount(),

@@ -24,22 +24,22 @@ public class GameApplication {
             do {
                 commend = Commend.of(InputView.inputMenu());
                 if (commend == Commend.GAME_RECORD) {
-                    List<GameRecordsResponse> gameRecords = baseBallGameController.getGames();
+                    final List<GameRecordsResponse> gameRecords = baseBallGameController.getGames();
                     OutputView.printGameRecords(gameRecords);
-                    int gameId = InputView.inputGameRecordId();
+                    final int gameId = InputView.inputGameRecordId();
 
-                    GameRecordResponse game = baseBallGameController.getGame(gameId);
+                    final GameRecordResponse game = baseBallGameController.getGame(gameId);
 
                     OutputView.printGameRecord(game);
                 } else if (commend == Commend.START) {
-                    int gameId = baseBallGameController.gameStart(baseBallNumberGenerator);
+                    final int gameId = baseBallGameController.gameStart(baseBallNumberGenerator);
                     OutputView.printPickComputerNumbers();
                     gameInProgress(gameId);
                 }
             }
             while (commend != Commend.END);
             applicationEnd();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             run();
         }
@@ -49,18 +49,18 @@ public class GameApplication {
         OutputView.printExitMessage();
     }
 
-    private static void gameInProgress(int gameId) {
+    private static void gameInProgress(final int gameId) {
         try {
             boolean isFinished = true;
 
             while (isFinished) {
-                List<Integer> userNumbers = InputView.inputNumbers();
-                CheckBallsRequest checkBallsRequest = new CheckBallsRequest(userNumbers, gameId);
-                CheckBallResponse checkBallDto = baseBallGameController.checkBalls(checkBallsRequest);
-                OutputView.printResult(checkBallDto);
-                isFinished = !checkBallDto.isSuccess();
+                final List<Integer> userNumbers = InputView.inputNumbers();
+                final CheckBallsRequest checkBallsRequest = new CheckBallsRequest(userNumbers, gameId);
+                final CheckBallResponse checkBallResponse = baseBallGameController.checkBalls(checkBallsRequest);
+                OutputView.printResult(checkBallResponse);
+                isFinished = !checkBallResponse.isSuccess();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             gameInProgress(gameId);
         }

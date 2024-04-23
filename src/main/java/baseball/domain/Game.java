@@ -16,25 +16,20 @@ public class Game {
 
     private LocalDateTime endAt;
 
-    public Game(Computer computer) {
+    public Game(final Computer computer) {
         this.computer = computer;
     }
 
-    public void addPlayerRecord(PlayerRecord playerRecord) {
+    public void addPlayerRecord(final PlayerRecord playerRecord) {
+        if (endAt != null) {
+            throw new IllegalArgumentException("게임이 종료되었습니다.");
+        }
+
         playerNumbers.add(playerRecord);
-    }
 
-    public void end() {
-        if (playerNumbers.isEmpty()) {
-            throw new IllegalArgumentException("사용자가 한번도 실행하지 않았습니다.");
+        if (playerRecord.isSuccess()) {
+            endAt = LocalDateTime.now();
         }
-        if (playerNumbers.stream()
-                .filter(PlayerRecord::isSuccess)
-                .noneMatch(PlayerRecord::isSuccess)) {
-            throw new IllegalArgumentException("사용자가 성공하지 못했습니다.");
-        }
-
-        endAt = LocalDateTime.now();
     }
 
     public int getId() {
@@ -57,7 +52,7 @@ public class Game {
         return playerNumbers.size();
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 

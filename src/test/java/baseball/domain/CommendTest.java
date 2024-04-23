@@ -23,8 +23,8 @@ class CommendTest {
     @DisplayName("명령어 찾기 테스트")
     @ParameterizedTest
     @MethodSource("provideOfTestFixtures")
-    void ofTest(int value, Commend expected) {
-        Commend actual = Commend.of(value);
+    void ofTest(final int value, final Commend expected) {
+        final Commend actual = Commend.of(value);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -34,6 +34,6 @@ class CommendTest {
     void ofExceptionTest() {
         assertThatThrownBy(() -> Commend.of(3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("1 또는 9만 입력 가능합니다.");
+                .hasMessage("1, 2, 9만 입력 가능합니다.");
     }
 }
