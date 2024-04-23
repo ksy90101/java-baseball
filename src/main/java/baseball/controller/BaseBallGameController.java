@@ -14,27 +14,27 @@ import java.util.List;
 public class BaseBallGameController {
     private final GameRepository gameRepository;
 
-    public BaseBallGameController(GameRepository gameRepository) {
+    public BaseBallGameController(final GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
 
-    public int gameStart(BaseBallNumberGenerator baseBallNumberGenerator, GameStartRequest gameStartRequest) {
-        Computer computer = new Computer(baseBallNumberGenerator.generate());
-        Game game = new Game(computer, gameStartRequest.limitPlayerTimes());
+    public int gameStart(final BaseBallNumberGenerator baseBallNumberGenerator, final GameStartRequest gameStartRequest) {
+        final Computer computer = new Computer(baseBallNumberGenerator.generate());
+        final Game game = new Game(computer, gameStartRequest.limitPlayerTimes());
 
         return gameRepository.insert(game);
     }
 
-    public CheckBallResponse checkBalls(CheckBallsRequest checkBallsRequest) {
-        Game game = gameRepository.findById(checkBallsRequest.gameId())
+    public CheckBallResponse checkBalls(final CheckBallsRequest checkBallsRequest) {
+        final Game game = gameRepository.findById(checkBallsRequest.gameId())
                 .orElseThrow(() -> new IllegalArgumentException("게임이 존재하지 않습니다."));
 
-        BaseBallNumbers playerNumbers = getPlayerNumbers(checkBallsRequest);
-        Computer computer = game.getComputer();
-        int strikeCount = computer.getStrikeCount(playerNumbers);
-        int ballCount = computer.getBallCount(playerNumbers, strikeCount);
+        final BaseBallNumbers playerNumbers = getPlayerNumbers(checkBallsRequest);
+        final Computer computer = game.getComputer();
+        final int strikeCount = computer.getStrikeCount(playerNumbers);
+        final int ballCount = computer.getBallCount(playerNumbers, strikeCount);
 
-        PlayerRecord playerRecord = new PlayerRecord(
+        final PlayerRecord playerRecord = new PlayerRecord(
                 playerNumbers,
                 strikeCount,
                 ballCount
@@ -49,7 +49,7 @@ public class BaseBallGameController {
                 game.getWinner());
     }
 
-    private BaseBallNumbers getPlayerNumbers(CheckBallsRequest checkBallsRequest) {
+    private BaseBallNumbers getPlayerNumbers(final CheckBallsRequest checkBallsRequest) {
         return new BaseBallNumbers(
                 checkBallsRequest.userNumbers()
                         .stream()
@@ -59,52 +59,52 @@ public class BaseBallGameController {
     }
 
     public List<GameRecordsResponse> getGames() {
-        List<Game> games = gameRepository.findAll();
+        final List<Game> games = gameRepository.findAll();
         return games.stream()
                 .map(this::convertGameRecordsResponse)
                 .toList();
     }
 
-    public GameRecordResponse getGame(int id) {
-        Game game = gameRepository.findById(id)
+    public GameRecordResponse getGame(final int id) {
+        final Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게임 기록이 존재하지 않습니다."));
 
         return convertGameRecordResponse(game);
     }
 
     public StatisticsResponse getStatistics() {
-        int maxPlayerTimes = gameRepository.getMaxPlayerTimes();
-        List<Integer> gameIdsOfMaxPlayerTimes = gameRepository.findAllByPlayerTimes(maxPlayerTimes)
+        final int maxPlayerTimes = gameRepository.getMaxPlayerTimes();
+        final List<Integer> gameIdsOfMaxPlayerTimes = gameRepository.findAllByPlayerTimes(maxPlayerTimes)
                 .stream()
                 .map(Game::getId)
                 .toList();
-        int minPlayerTimes = gameRepository.getMinPlayerTimes();
-        List<Integer> gameIdsOfMinPlayerTimes = gameRepository.findAllByPlayerTimes(minPlayerTimes)
+        final int minPlayerTimes = gameRepository.getMinPlayerTimes();
+        final List<Integer> gameIdsOfMinPlayerTimes = gameRepository.findAllByPlayerTimes(minPlayerTimes)
                 .stream()
                 .map(Game::getId)
                 .toList();
+        
+        final double averagePlayerTimes = gameRepository.getAveragePlayerTimes();
 
-        double averagePlayerTimes = gameRepository.getAveragePlayerTimes();
+        final int maxCountLimitPlayerTimes = gameRepository.getMaxCountLimitPlayerTimes();
+        final List<Integer> gameIdsOfMaxCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(maxCountLimitPlayerTimes);
 
-        int maxCountLimitPlayerTimes = gameRepository.getMaxCountLimitPlayerTimes();
-        List<Integer> gameIdsOfMaxCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(maxCountLimitPlayerTimes);
+        final int minCountLimitPlayerTimes = gameRepository.getMinCountLimitPlayerTimes();
+        final List<Integer> gameIdsOfMinCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        int minCountLimitPlayerTimes = gameRepository.getMinCountLimitPlayerTimes();
-        List<Integer> gameIdsOfMinCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final int maxLimitPlayerTimes = gameRepository.getMaxLimitPlayerTimes();
+        final List<Integer> gameIdsOfMaxLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        int maxLimitPlayerTimes = gameRepository.getMaxLimitPlayerTimes();
-        List<Integer> gameIdsOfMaxLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final int minLimitPlayerTimes = gameRepository.getMinLimitPlayerTimes();
+        final List<Integer> gameIdsOfMinLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        int minLimitPlayerTimes = gameRepository.getMinLimitPlayerTimes();
-        List<Integer> gameIdsOfMinLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final int maxLimitPlayerTimesByWinnerComputer = gameRepository.getMaxLimitPlayerTimesByWinnerComputer();
+        final List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        int maxLimitPlayerTimesByWinnerComputer = gameRepository.getMaxLimitPlayerTimesByWinnerComputer();
-        List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final int maxLimitPlayerTimesByWinnerPlayer = gameRepository.getMaxLimitPlayerTimesByWinnerPlayer();
+        final List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerPlayer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
 
-        int maxLimitPlayerTimesByWinnerPlayer = gameRepository.getMaxLimitPlayerTimesByWinnerPlayer();
-        List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerPlayer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
-
-        double averageLimitPlayerTimes = gameRepository.getAverageLimitPlayerTimes();
+        final double averageLimitPlayerTimes = gameRepository.getAverageLimitPlayerTimes();
 
         return new StatisticsResponse(
                 maxPlayerTimes,
@@ -128,15 +128,15 @@ public class BaseBallGameController {
         );
     }
 
-    private GameRecordsResponse convertGameRecordsResponse(Game game) {
+    private GameRecordsResponse convertGameRecordsResponse(final Game game) {
         return new GameRecordsResponse(game.getId(),
                 game.getStartAt(),
                 game.getEndAt(),
                 game.getPlayerTimes());
     }
 
-    private GameRecordResponse convertGameRecordResponse(Game game) {
-        List<PlayerRecordResponse> playerRecordResponses = game.getPlayerNumbers()
+    private GameRecordResponse convertGameRecordResponse(final Game game) {
+        final List<PlayerRecordResponse> playerRecordResponses = game.getPlayerNumbers()
                 .stream()
                 .map(playerRecord -> new PlayerRecordResponse(playerRecord.getValueNumbers(),
                         playerRecord.getStrikeCount(),
