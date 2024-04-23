@@ -7,9 +7,7 @@ public record StatisticsResponse(
         List<Integer> gameIdsOfMaxPlayerTimes,
         int minPlayerTimes,
         List<Integer> gameIdsOfMinPlayerTimes,
-
         double averagePlayerTimes,
-
         int maxCountLimitPlayerTimes,
         List<Integer> gameIdsOfMaxCountLimitPlayerTimes,
         int minCountLimitPlayerTimes,
@@ -22,6 +20,9 @@ public record StatisticsResponse(
         List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer,
         int maxLimitPlayerTimesByWinnerPlayer,
         List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerPlayer,
-        double averageLimitPlayerTimes
+        double averageLimitPlayerTimes,
+        int countByWinnerComputer,
+        int countByWinnerPlayer,
+        int playerWinningPercentage
 ) {
 }

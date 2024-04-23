@@ -26,7 +26,7 @@ public class OutputView {
             System.out.println("낫싱");
             return;
         }
-        
+
         System.out.println(checkBallDto.ballCount() + "볼 " + checkBallDto.strikeCount() + "스트라이크");
 
         if (checkBallDto.isFinished()) {
@@ -103,5 +103,11 @@ public class OutputView {
 
         System.out.println("컴퓨터가 가장 많이 승리한 승리/패패 횟수: " + statistics.maxLimitPlayerTimesByWinnerComputer() + "회 - " + statistics.gameIdsOfMaxLimitPlayerTimesByWinnerComputer());
         System.out.println("플레이어가 가장 많이 승리한 승리/패패 횟수: " + statistics.maxLimitPlayerTimesByWinnerPlayer() + "회 - " + statistics.gameIdsOfMaxLimitPlayerTimesByWinnerPlayer());
+
+        System.out.println(OutputView.DIVIDER);
+
+        System.out.println("컴퓨터 승리 횟수: " + statistics.countByWinnerComputer());
+        System.out.println("플레이어 승리 횟수: " + statistics.countByWinnerPlayer());
+        System.out.println("플레이어의 승률: " + statistics.playerWinningPercentage() + "%");
     }
 }

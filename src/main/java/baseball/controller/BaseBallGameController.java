@@ -83,28 +83,33 @@ public class BaseBallGameController {
                 .stream()
                 .map(Game::getId)
                 .toList();
-        
+
         final double averagePlayerTimes = gameRepository.getAveragePlayerTimes();
 
         final int maxCountLimitPlayerTimes = gameRepository.getMaxCountLimitPlayerTimes();
-        final List<Integer> gameIdsOfMaxCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(maxCountLimitPlayerTimes);
+        final List<Integer> gameIdsOfMaxCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(maxCountLimitPlayerTimes, (game) -> true);
 
         final int minCountLimitPlayerTimes = gameRepository.getMinCountLimitPlayerTimes();
-        final List<Integer> gameIdsOfMinCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final List<Integer> gameIdsOfMinCountLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes, (game) -> true);
 
         final int maxLimitPlayerTimes = gameRepository.getMaxLimitPlayerTimes();
-        final List<Integer> gameIdsOfMaxLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final List<Integer> gameIdsOfMaxLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes, (game) -> true);
 
         final int minLimitPlayerTimes = gameRepository.getMinLimitPlayerTimes();
-        final List<Integer> gameIdsOfMinLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final List<Integer> gameIdsOfMinLimitPlayerTimes = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes, (game) -> true);
 
         final int maxLimitPlayerTimesByWinnerComputer = gameRepository.getMaxLimitPlayerTimesByWinnerComputer();
-        final List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final List<Integer> gameIdsOfMaxLimitPlayerTimesByWinnerComputer = gameRepository.findIdsByLimitPlayerTimes(maxLimitPlayerTimesByWinnerComputer, Game::isComputerWin);
 
         final int maxLimitPlayerTimesByWinnerPlayer = gameRepository.getMaxLimitPlayerTimesByWinnerPlayer();
-        final List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerPlayer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes);
+        final List<Integer> gameIdsOfMibLimitPlayerTimesByWinnerPlayer = gameRepository.findIdsByLimitPlayerTimes(minCountLimitPlayerTimes, Game::isPlayerWin);
 
         final double averageLimitPlayerTimes = gameRepository.getAverageLimitPlayerTimes();
+
+        final int countByWinnerComputer = gameRepository.getCountByWinnerComputer();
+        final int countByWinnerPlayer = gameRepository.getCountByWinnerPlayer();
+
+        final int playerWinningPercentage = (int) ((double) countByWinnerPlayer / (countByWinnerComputer + countByWinnerPlayer) * 100);
 
         return new StatisticsResponse(
                 maxPlayerTimes,
@@ -124,7 +129,10 @@ public class BaseBallGameController {
                 gameIdsOfMaxLimitPlayerTimesByWinnerComputer,
                 maxLimitPlayerTimesByWinnerPlayer,
                 gameIdsOfMibLimitPlayerTimesByWinnerPlayer,
-                averageLimitPlayerTimes
+                averageLimitPlayerTimes,
+                countByWinnerComputer,
+                countByWinnerPlayer,
+                playerWinningPercentage
         );
     }
 

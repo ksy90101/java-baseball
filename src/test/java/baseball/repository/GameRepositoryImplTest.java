@@ -24,12 +24,12 @@ class GameRepositoryImplTest {
     @DisplayName("해당 게임을 조회할 수 있다.")
     @Test
     void findByIdTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
 
-        int gameId = gameRepository.insert(game);
+        final int gameId = gameRepository.insert(game);
 
-        Game findGame = gameRepository.findById(gameId).get();
+        final Game findGame = gameRepository.findById(gameId).get();
 
         assertThat(findGame).isEqualTo(game);
     }
@@ -37,16 +37,16 @@ class GameRepositoryImplTest {
     @DisplayName("컴퓨터를 저장할수 있다.")
     @Test
     void insertTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
         assertDoesNotThrow(() -> gameRepository.insert(game));
     }
 
     @DisplayName("모든 게임을 조회할 수 있다.")
     @Test
     void findAllTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
         gameRepository.insert(game);
 
         assertThat(gameRepository.findAll()).hasSize(1);
@@ -56,29 +56,29 @@ class GameRepositoryImplTest {
     @DisplayName("플레이어 횟수에 따라 게임을 조회할 수 있다.")
     @Test
     void findAllByPlayerTimes() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
-        BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
+        final BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
+        final PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
         game.addPlayerRecord(playerRecord);
 
         gameRepository.insert(game);
 
-        Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game2 = new Game(computer2, 10);
-        BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
+        final Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game2 = new Game(computer2, 10);
+        final BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
                 new Number(4),
                 new Number(5),
                 new Number(6)));
-        PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
-        BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
+        final PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
+        final BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
+        final PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
         game2.addPlayerRecord(playerRecord2);
         game2.addPlayerRecord(playerRecord3);
 
@@ -92,29 +92,29 @@ class GameRepositoryImplTest {
 
     @Test
     void getMinPlayerTimes() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
-        BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
+        final BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
+        final PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
         game.addPlayerRecord(playerRecord);
 
         gameRepository.insert(game);
 
-        Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game2 = new Game(computer2, 10);
-        BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
+        final Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game2 = new Game(computer2, 10);
+        final BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
                 new Number(4),
                 new Number(5),
                 new Number(6)));
-        PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
-        BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
+        final PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
+        final BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
+        final PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
         game2.addPlayerRecord(playerRecord2);
         game2.addPlayerRecord(playerRecord3);
 
@@ -125,29 +125,29 @@ class GameRepositoryImplTest {
 
     @Test
     void getMaxPlayerTimes() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
-        BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
+        final BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
+        final PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
         game.addPlayerRecord(playerRecord);
 
         gameRepository.insert(game);
 
-        Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game2 = new Game(computer2, 10);
-        BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
+        final Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game2 = new Game(computer2, 10);
+        final BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
                 new Number(4),
                 new Number(5),
                 new Number(6)));
-        PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
-        BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
+        final PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
+        final BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
+        final PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
         game2.addPlayerRecord(playerRecord2);
         game2.addPlayerRecord(playerRecord3);
 
@@ -159,13 +159,13 @@ class GameRepositoryImplTest {
     @DisplayName("LimitedPlayerTimes를 가지고 조회할 수 있다.")
     @Test
     void findAllByLimitPlayerTimesTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game1 = new Game(computer, 10);
-        Game game2 = new Game(computer, 5);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game1 = new Game(computer, 10);
+        final Game game2 = new Game(computer, 5);
         gameRepository.insert(game1);
         gameRepository.insert(game2);
 
-        List<Integer> game_ids = gameRepository.findIdsByLimitPlayerTimes(10);
+        final List<Integer> game_ids = gameRepository.findIdsByLimitPlayerTimes(10, game -> true);
 
         assertAll(
                 () -> assertThat(game_ids).hasSize(1),
@@ -176,29 +176,29 @@ class GameRepositoryImplTest {
 
     @Test
     void getAveragePlayerTimes() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game = new Game(computer, 10);
-        BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game = new Game(computer, 10);
+        final BaseBallNumbers playerNumbers1 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
+        final PlayerRecord playerRecord = new PlayerRecord(playerNumbers1, 3, 0);
         game.addPlayerRecord(playerRecord);
 
         gameRepository.insert(game);
 
-        Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game2 = new Game(computer2, 10);
-        BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
+        final Computer computer2 = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game2 = new Game(computer2, 10);
+        final BaseBallNumbers playerNumbers2 = new BaseBallNumbers(List.of(
                 new Number(4),
                 new Number(5),
                 new Number(6)));
-        PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
-        BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
+        final PlayerRecord playerRecord2 = new PlayerRecord(playerNumbers2, 0, 0);
+        final BaseBallNumbers playerNumbers3 = new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3)));
-        PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
+        final PlayerRecord playerRecord3 = new PlayerRecord(playerNumbers3, 0, 0);
         game2.addPlayerRecord(playerRecord2);
         game2.addPlayerRecord(playerRecord3);
 
@@ -210,10 +210,10 @@ class GameRepositoryImplTest {
     @DisplayName("가장 많이 적용된 승리/패패 횟수")
     @Test
     void getMaxCountLimitPlayerTimesTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game1 = new Game(computer, 10);
-        Game game2 = new Game(computer, 10);
-        Game game3 = new Game(computer, 5);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game1 = new Game(computer, 10);
+        final Game game2 = new Game(computer, 10);
+        final Game game3 = new Game(computer, 5);
         gameRepository.insert(game1);
         gameRepository.insert(game2);
         gameRepository.insert(game3);
@@ -224,10 +224,10 @@ class GameRepositoryImplTest {
     @DisplayName("가장 적게 적용된 승리/패패 횟수")
     @Test
     void getMinCountLimitPlayerTimesTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game1 = new Game(computer, 10);
-        Game game2 = new Game(computer, 10);
-        Game game3 = new Game(computer, 5);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game1 = new Game(computer, 10);
+        final Game game2 = new Game(computer, 10);
+        final Game game3 = new Game(computer, 5);
         gameRepository.insert(game1);
         gameRepository.insert(game2);
         gameRepository.insert(game3);
@@ -238,10 +238,10 @@ class GameRepositoryImplTest {
     @DisplayName("승리/패패 횟수에 대한 가장 큰값")
     @Test
     void getMaxLimitPlayerTimesTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game1 = new Game(computer, 20);
-        Game game2 = new Game(computer, 10);
-        Game game3 = new Game(computer, 5);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game1 = new Game(computer, 20);
+        final Game game2 = new Game(computer, 10);
+        final Game game3 = new Game(computer, 5);
         gameRepository.insert(game1);
         gameRepository.insert(game2);
         gameRepository.insert(game3);
@@ -252,10 +252,10 @@ class GameRepositoryImplTest {
     @DisplayName("승리/패패 횟수에 대한 가장 낮은값")
     @Test
     void getMinLimitPlayerTimesTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game1 = new Game(computer, 20);
-        Game game2 = new Game(computer, 10);
-        Game game3 = new Game(computer, 5);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game1 = new Game(computer, 20);
+        final Game game2 = new Game(computer, 10);
+        final Game game3 = new Game(computer, 5);
         gameRepository.insert(game1);
         gameRepository.insert(game2);
         gameRepository.insert(game3);
@@ -266,26 +266,26 @@ class GameRepositoryImplTest {
     @DisplayName("컴퓨터가 가장 많이 승리한 승리/패패 횟수")
     @Test
     void getMaxLimitPlayerTimesByWinnerComputerTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        PlayerRecord successPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final PlayerRecord successPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3))), 3, 0);
-        PlayerRecord failPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
+        final PlayerRecord failPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
                 new Number(4),
                 new Number(5),
                 new Number(6))), 0, 0);
 
-        Game game1 = new Game(computer, 1);
+        final Game game1 = new Game(computer, 1);
         game1.addPlayerRecord(failPlayerRecord);
-        Game game2 = new Game(computer, 1);
+        final Game game2 = new Game(computer, 1);
         game2.addPlayerRecord(failPlayerRecord);
-        Game game3 = new Game(computer, 2);
+        final Game game3 = new Game(computer, 2);
         game3.addPlayerRecord(failPlayerRecord);
         game3.addPlayerRecord(failPlayerRecord);
-        Game game4 = new Game(computer, 1);
+        final Game game4 = new Game(computer, 1);
         game4.addPlayerRecord(successPlayerRecord);
-        Game game5 = new Game(computer, 1);
+        final Game game5 = new Game(computer, 1);
         game5.addPlayerRecord(successPlayerRecord);
 
         gameRepository.insert(game1);
@@ -300,26 +300,26 @@ class GameRepositoryImplTest {
     @DisplayName("플레이어가 가장 많이 승리한 승리/패패 횟수")
     @Test
     void getMaxLimitPlayerTimesByWinnerPlayerTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        PlayerRecord successPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final PlayerRecord successPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
                 new Number(1),
                 new Number(2),
                 new Number(3))), 3, 0);
-        PlayerRecord failPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
+        final PlayerRecord failPlayerRecord = new PlayerRecord(new BaseBallNumbers(List.of(
                 new Number(4),
                 new Number(5),
                 new Number(6))), 0, 0);
 
-        Game game1 = new Game(computer, 1);
+        final Game game1 = new Game(computer, 1);
         game1.addPlayerRecord(failPlayerRecord);
-        Game game2 = new Game(computer, 1);
+        final Game game2 = new Game(computer, 1);
         game2.addPlayerRecord(failPlayerRecord);
-        Game game3 = new Game(computer, 2);
+        final Game game3 = new Game(computer, 2);
         game3.addPlayerRecord(failPlayerRecord);
         game3.addPlayerRecord(failPlayerRecord);
-        Game game4 = new Game(computer, 1);
+        final Game game4 = new Game(computer, 1);
         game4.addPlayerRecord(successPlayerRecord);
-        Game game5 = new Game(computer, 1);
+        final Game game5 = new Game(computer, 1);
         game5.addPlayerRecord(successPlayerRecord);
 
         gameRepository.insert(game1);
@@ -334,10 +334,10 @@ class GameRepositoryImplTest {
     @DisplayName("승리/패패 시도 횟수 평균 값")
     @Test
     void getAverageLimitPlayerTimesTest() {
-        Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
-        Game game1 = new Game(computer, 20);
-        Game game2 = new Game(computer, 10);
-        Game game3 = new Game(computer, 5);
+        final Computer computer = new Computer(Arrays.asList(new Number(1), new Number(2), new Number(3)));
+        final Game game1 = new Game(computer, 20);
+        final Game game2 = new Game(computer, 10);
+        final Game game3 = new Game(computer, 5);
         gameRepository.insert(game1);
         gameRepository.insert(game2);
         gameRepository.insert(game3);

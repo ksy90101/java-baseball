@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Map.Entry.comparingByValue;
@@ -15,7 +16,7 @@ public class GameRepositoryImpl implements GameRepository {
     private static int id = 1;
 
     @Override
-    public int insert(Game game) {
+    public int insert(final Game game) {
         game.setId(id);
         GAME_RECORDS.put(id, game);
         id++;
@@ -24,7 +25,7 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public Optional<Game> findById(int gameId) {
+    public Optional<Game> findById(final int gameId) {
         return Optional.ofNullable(GAME_RECORDS.get(gameId));
     }
 
@@ -36,7 +37,7 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public List<Game> findAllByPlayerTimes(int playerTimes) {
+    public List<Game> findAllByPlayerTimes(final int playerTimes) {
         return GAME_RECORDS.values()
                 .stream()
                 .filter(game -> game.samePlayerTimes(playerTimes))
@@ -44,10 +45,11 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public List<Integer> findIdsByLimitPlayerTimes(int limitPlayerTimes) {
+    public List<Integer> findIdsByLimitPlayerTimes(final int limitPlayerTimes, final Predicate<Game> winnerPredicate) {
         return GAME_RECORDS.values()
                 .stream()
                 .filter(game -> game.sameLimitPlayerTimes(limitPlayerTimes))
+                .filter(winnerPredicate)
                 .map(Game::getId)
                 .toList();
     }
@@ -79,37 +81,34 @@ public class GameRepositoryImpl implements GameRepository {
                 .orElse(0);
     }
 
-    // 가장 많이 적용된 승리/패패 횟수
     @Override
     public int getMaxCountLimitPlayerTimes() {
-        Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
+        final Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
                 .stream()
                 .map(Game::getLimitPlayerTimes)
                 .collect(Collectors.groupingBy(i -> i, Collectors.counting()));
 
-        Optional<Map.Entry<Integer, Long>> mostFrequent = frequencyMap.entrySet()
+        final Optional<Map.Entry<Integer, Long>> mostFrequent = frequencyMap.entrySet()
                 .stream()
                 .max(comparingByValue());
 
         return mostFrequent.map(Map.Entry::getKey).orElse(0);
     }
 
-    // 가장 적게 적용된 승리/패패 횟수
     @Override
     public int getMinCountLimitPlayerTimes() {
-        Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
+        final Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
                 .stream()
                 .map(Game::getLimitPlayerTimes)
                 .collect(Collectors.groupingBy(i -> i, Collectors.counting()));
 
-        Optional<Map.Entry<Integer, Long>> mostFrequent = frequencyMap.entrySet()
+        final Optional<Map.Entry<Integer, Long>> mostFrequent = frequencyMap.entrySet()
                 .stream()
                 .min(comparingByValue());
 
         return mostFrequent.map(Map.Entry::getKey).orElse(0);
     }
 
-    // 가장 큰 값으로 승리/패패 횟수
     @Override
     public int getMaxLimitPlayerTimes() {
         return GAME_RECORDS.values()
@@ -119,7 +118,6 @@ public class GameRepositoryImpl implements GameRepository {
                 .orElse(0);
     }
 
-    // 가장 낮은 값으로 승리/패패 횟수
     @Override
     public int getMinLimitPlayerTimes() {
         return GAME_RECORDS.values()
@@ -129,35 +127,35 @@ public class GameRepositoryImpl implements GameRepository {
                 .orElse(0);
     }
 
-    // 컴퓨터가 가장 많이 승리한 승리/패패 횟수
     @Override
     public int getMaxLimitPlayerTimesByWinnerComputer() {
-        Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
+        final Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
                 .stream()
                 .filter(Game::isComputerWin)
                 .map(Game::getLimitPlayerTimes)
                 .collect(Collectors.groupingBy(i -> i, Collectors.counting()));
 
-        Optional<Map.Entry<Integer, Long>> mostFrequent = frequencyMap.entrySet().stream()
+        final Optional<Map.Entry<Integer, Long>> max = frequencyMap.entrySet()
+                .stream()
                 .max(comparingByValue());
 
-        return mostFrequent.map(Map.Entry::getKey).orElse(0);
+        return max.map(Map.Entry::getKey).orElse(0);
 
     }
 
-    // 플레이어가 가장 많이 승리한 승리/패패 횟수
     @Override
     public int getMaxLimitPlayerTimesByWinnerPlayer() {
-        Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
+        final Map<Integer, Long> frequencyMap = GAME_RECORDS.values()
                 .stream()
                 .filter(Game::isPlayerWin)
                 .map(Game::getLimitPlayerTimes)
                 .collect(Collectors.groupingBy(i -> i, Collectors.counting()));
 
-        Optional<Map.Entry<Integer, Long>> mostFrequent = frequencyMap.entrySet().stream()
+        final Optional<Map.Entry<Integer, Long>> max = frequencyMap.entrySet()
+                .stream()
                 .max(comparingByValue());
 
-        return mostFrequent.map(Map.Entry::getKey).orElse(0);
+        return max.map(Map.Entry::getKey).orElse(0);
     }
 
     @Override
@@ -167,6 +165,22 @@ public class GameRepositoryImpl implements GameRepository {
                 .mapToInt(Game::getLimitPlayerTimes)
                 .average()
                 .orElse(0);
+    }
+
+    @Override
+    public int getCountByWinnerComputer() {
+        return (int) GAME_RECORDS.values()
+                .stream()
+                .filter(Game::isComputerWin)
+                .count();
+    }
+
+    @Override
+    public int getCountByWinnerPlayer() {
+        return (int) GAME_RECORDS.values()
+                .stream()
+                .filter(Game::isPlayerWin)
+                .count();
     }
 
     @Override

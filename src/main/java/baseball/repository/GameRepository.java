@@ -4,6 +4,7 @@ import baseball.domain.Game;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public interface GameRepository {
     int insert(Game game);
@@ -14,7 +15,7 @@ public interface GameRepository {
 
     List<Game> findAllByPlayerTimes(int playerTimes);
 
-    List<Integer> findIdsByLimitPlayerTimes(int limitPlayerTimes);
+    List<Integer> findIdsByLimitPlayerTimes(int limitPlayerTimes, final Predicate<Game> winnerPredicate);
 
     int getMinPlayerTimes();
 
@@ -35,6 +36,10 @@ public interface GameRepository {
     int getMaxLimitPlayerTimesByWinnerComputer();
 
     int getMaxLimitPlayerTimesByWinnerPlayer();
+
+    int getCountByWinnerComputer();
+
+    int getCountByWinnerPlayer();
 
     void clear();
 
