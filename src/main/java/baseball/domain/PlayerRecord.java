@@ -9,22 +9,30 @@ public class PlayerRecord {
 
     private final Count ballCount;
 
-    public PlayerRecord(BaseBallNumbers numbers, int strikeCount, int ballCount) {
+    public PlayerRecord(final BaseBallNumbers numbers, final Count strikeCount, final Count ballCount) {
+        validateCount(strikeCount, ballCount);
         this.numbers = numbers;
-        this.strikeCount = new Count(strikeCount);
-        this.ballCount = new Count(ballCount);
+        this.strikeCount = strikeCount;
+        this.ballCount = ballCount;
     }
 
     public List<Integer> getValueNumbers() {
         return numbers.getValueNumbers();
     }
 
+    private void validateCount(final Count strikeCount, final Count ballCount) {
+        final int totalCount = strikeCount.getValue() + ballCount.getValue();
+        if (totalCount > BaseBallNumbers.TOTAL_COUNT) {
+            throw new IllegalArgumentException("스트라이크와 볼의 합은 3개를 넘을 수 없습니다.");
+        }
+    }
+
     public int getStrikeCount() {
-        return strikeCount.value();
+        return strikeCount.getValue();
     }
 
     public int getBallCount() {
-        return ballCount.value();
+        return ballCount.getValue();
     }
 
     public boolean isNotting() {

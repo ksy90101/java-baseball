@@ -1,9 +1,6 @@
 package baseball.controller;
 
-import baseball.domain.BaseBallNumbers;
-import baseball.domain.Computer;
-import baseball.domain.Game;
-import baseball.domain.PlayerRecord;
+import baseball.domain.*;
 import baseball.dto.*;
 import baseball.factory.BaseBallNumberFactory;
 import baseball.generator.BaseBallNumberGenerator;
@@ -31,17 +28,13 @@ public class BaseBallGameController {
 
         final BaseBallNumbers playerNumbers = getPlayerNumbers(checkBallsRequest);
         final Computer computer = game.getComputer();
-        final int strikeCount = computer.getStrikeCount(playerNumbers);
-        final int ballCount = computer.getBallCount(playerNumbers, strikeCount);
+        final Count strikeCount = computer.getStrikeCount(playerNumbers);
+        final Count ballCount = computer.getBallCount(playerNumbers, strikeCount);
 
-        final PlayerRecord playerRecord = new PlayerRecord(
-                playerNumbers,
-                strikeCount,
-                ballCount
-        );
+        final PlayerRecord playerRecord = new PlayerRecord(playerNumbers, strikeCount, ballCount);
         game.addPlayerRecord(playerRecord);
 
-        return new CheckBallResponse(strikeCount, ballCount, playerRecord.isNotting(), playerRecord.isSuccess());
+        return new CheckBallResponse(playerRecord.getStrikeCount(), playerRecord.getBallCount(), playerRecord.isNotting(), playerRecord.isSuccess());
     }
 
     private BaseBallNumbers getPlayerNumbers(final CheckBallsRequest checkBallsRequest) {

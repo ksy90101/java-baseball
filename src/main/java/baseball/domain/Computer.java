@@ -9,19 +9,21 @@ public class Computer {
         this.numbers = new BaseBallNumbers(numbers);
     }
 
-    public int getStrikeCount(final BaseBallNumbers playerNumbers) {
-        return (int) playerNumbers.numbers().stream()
+    public Count getStrikeCount(final BaseBallNumbers playerNumbers) {
+        final int strikeCount = (int) playerNumbers.numbers().stream()
                 .filter(number -> isStrike(number, playerNumbers.indexOf(number)))
                 .count();
+
+        return Count.of(strikeCount);
     }
 
-    public int getBallCount(final BaseBallNumbers playerNumbers, final int strikeCount) {
-        final int totalBallCount = (int) playerNumbers.numbers()
+    public Count getBallCount(final BaseBallNumbers playerNumbers, final Count strikeCount) {
+        final int ballCount = (int) playerNumbers.numbers()
                 .stream()
                 .filter(this::isBall)
                 .count();
 
-        return totalBallCount - strikeCount;
+        return Count.of(ballCount - strikeCount.getValue());
     }
 
     private boolean isBall(final Number number) {
