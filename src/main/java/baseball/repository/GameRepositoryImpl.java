@@ -12,7 +12,7 @@ public class GameRepositoryImpl implements GameRepository {
     private static int id = 1;
 
     @Override
-    public int insert(Game game) {
+    public int insert(final Game game) {
         game.setId(id);
         GAME_RECORDS.put(id, game);
         id++;
@@ -21,7 +21,7 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public Optional<Game> findById(int gameId) {
+    public Optional<Game> findById(final int gameId) {
         return Optional.ofNullable(GAME_RECORDS.get(gameId));
     }
 
@@ -36,6 +36,4 @@ public class GameRepositoryImpl implements GameRepository {
     public void clear() {
         GAME_RECORDS.clear();
     }
-
-
 }

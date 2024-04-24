@@ -13,5 +13,4 @@ public interface GameRepository {
     List<Game> findAll();
 
     void clear();
-
 }
