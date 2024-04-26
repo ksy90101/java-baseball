@@ -23,7 +23,11 @@ public class GameApplication {
         try {
             do {
                 commend = Commend.of(InputView.inputMenu());
-                if (commend == Commend.GAME_RECORD) {
+                if (commend == Commend.START) {
+                    final int gameId = baseBallGameController.gameStart(baseBallNumberGenerator);
+                    OutputView.printPickComputerNumbers();
+                    gameInProgress(gameId);
+                } else if (commend == Commend.GAME_RECORD) {
                     final List<GameRecordsResponse> gameRecords = baseBallGameController.getGames();
                     OutputView.printGameRecords(gameRecords);
                     final int gameId = InputView.inputGameRecordId();
@@ -31,10 +35,6 @@ public class GameApplication {
                     final GameRecordResponse game = baseBallGameController.getGame(gameId);
 
                     OutputView.printGameRecord(game);
-                } else if (commend == Commend.START) {
-                    final int gameId = baseBallGameController.gameStart(baseBallNumberGenerator);
-                    OutputView.printPickComputerNumbers();
-                    gameInProgress(gameId);
                 }
             }
             while (commend != Commend.END);
